@@ -75,6 +75,8 @@ st.markdown("""
 **What is ACI:**  
 ACI measures hitter approach quality by evaluating swing/take decisions through count leverage, pitch location, personalized hot/cold zones, and intelligent 2-strike protection using MLB Statcast data.
 
+ACI is process-focused rather than outcome-based, measuring hitter approach quality independent of results.
+
 **Formula:**  
 ACI = Good Decisions / Total Pitches Seen
 - Each pitch is scored binary (1 = good decision, 0 = poor decision) based on count context.
