@@ -55,15 +55,18 @@ ACI measures hitter approach quality by evaluating swing/take decisions through 
 **Formula:**  
 ACI = Good Decisions ÷ Total Pitches Seen
 
-A “Good Decision” is defined contextually by:
-- Hunting damage pitches in advantage counts
+Each pitch is scored binary (1 = good decision, 0 = poor decision) based on game context.
+
+Examples of positively scored decisions include:
+- Swinging at damage pitches in advantage counts (2-0, 3-1)
 - Taking edge/shadow pitches when ahead
 - Attacking hitter-specific hot zones
-- Punishing hanging breaking balls
-- Protecting competitive pitches with 2 strikes while avoiding chase
+- Punishing elevated hanging breaking balls
+- Protecting competitive pitches with 2 strikes
+- Taking obvious chase pitches with 2 strikes
 
-**Example:**  
-A take on the edge at 2-0 may be scored positively, while that same take at 2-2 may be scored negatively due to count context.
+**Context matters:**  
+A take on the edge at 2-0 may be scored positively, while that same take at 2-2 may be scored negatively due to count leverage and protection expectations.
 """)
 
 # -------------------
