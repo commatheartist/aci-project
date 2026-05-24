@@ -52,13 +52,27 @@ st.title("Approach per Count Index (ACI)")
 st.markdown("""
 ACI measures hitter approach quality by evaluating swing/take decisions through count leverage, pitch location, personalized hot/cold zones, and intelligent 2-strike protection using MLB Statcast data.
 
-ACI is process-focused rather than outcome-focused.
-
 **Formula:**  
-ACI = Good Decisions / Total Pitches Seen
+ACI = Good Decisions ÷ Total Pitches Seen
 
-A “Good Decision” is defined contextually by count, pitch location, hitter-specific hot/cold zones, and approach philosophy.
+A “Good Decision” is defined contextually by:
+- Hunting damage pitches in advantage counts
+- Taking edge/shadow pitches when ahead
+- Attacking hitter-specific hot zones
+- Punishing hanging breaking balls
+- Protecting competitive pitches with 2 strikes while avoiding chase
+
+**Example:**  
+A take on the edge at 2-0 may be scored positively, while that same take at 2-2 may be scored negatively due to count context.
 """)
+
+# -------------------
+# SECTION BREAK
+# -------------------
+
+st.divider()
+
+st.subheader("2026 MLB Leaderboard")
 
 # -------------------
 # TEAM FILTER
