@@ -49,6 +49,10 @@ df = df.rename(columns={
 
 st.title("Approach per Count Index (ACI)")
 
+st.caption(
+    "Developed by Brandon Smith | https://medium.com/@WinsAboveSmitty"
+)
+
 st.markdown("""
 ACI measures hitter approach quality by evaluating swing/take decisions through count leverage, pitch location, personalized hot/cold zones, and intelligent 2-strike protection using MLB Statcast data.
 
@@ -68,10 +72,6 @@ Examples of positively scored decisions include:
 **Context matters:**  
 A take on the edge at 2-0 may be scored positively, while that same take at 2-2 may be scored negatively due to count leverage and protection expectations.
 """)
-
-st.caption(
-    "Developed by Brandon Smith | https://medium.com/@WinsAboveSmitty"
-)
 
 # -------------------
 # SECTION BREAK
