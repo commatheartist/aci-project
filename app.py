@@ -31,20 +31,38 @@ df = df.sort_values(
 # create rank column
 df["Rank"] = df.index + 1
 
+# create percentile column
+total_players = len(df)
+
+df["Percentile"] = (
+    (
+        (total_players - df["Rank"])
+        / total_players
+    ) * 100
+).round(0).astype(int).astype(str) + "th"
+
 # reorder columns
 df = df[
-    ["Rank", "player_name", "batting_team", "ACI", "Pitches"]
+    [
+        "Rank",
+        "Percentile",
+        "player_name",
+        "batting_team",
+        "ACI",
+        "Pitches"
+    ]
 ]
 
 # rename columns
 df = df.rename(columns={
     "player_name": "Player",
     "batting_team": "Team",
-    "Pitches": "Pitches Seen"
+    "Pitches": "Pitches Seen",
+    "Percentile": "ACI Percentile"
 })
 
 # -------------------
-# TITLE
+# TITLE + METHODOLOGY
 # -------------------
 
 st.title("Approach per Count Index (ACI)")
