@@ -6,7 +6,7 @@ import pandas as pd
 # -------------------
 
 st.set_page_config(
-    page_title="Approach Count Index",
+    page_title="Approach per Count Index (ACI)",
     layout="wide"
 )
 
@@ -17,15 +17,29 @@ st.set_page_config(
 df = pd.read_csv("aci.csv")
 
 # -------------------
-# CLEAN FORMATTING
+# FORMAT DATA
 # -------------------
 
 df["ACI"] = df["ACI"].round(3)
 
+# sort leaderboard first
+df = df.sort_values(
+    "ACI",
+    ascending=False
+).reset_index(drop=True)
+
+# create rank column
+df["Rank"] = df.index + 1
+
+# reorder columns
+df = df[
+    ["Rank", "player_name", "batting_team", "ACI", "Pitches"]
+]
+
+# rename columns
 df = df.rename(columns={
     "player_name": "Player",
     "batting_team": "Team",
-    "ACI": "ACI",
     "Pitches": "Pitches Seen"
 })
 
@@ -61,15 +75,6 @@ if player_search:
             na=False
         )
     ]
-
-# -------------------
-# SORTING DEFAULT
-# -------------------
-
-df = df.sort_values(
-    "ACI",
-    ascending=False
-)
 
 # -------------------
 # DISPLAY TABLE
