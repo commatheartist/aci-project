@@ -57,19 +57,19 @@ st.markdown("""
 ACI measures hitter approach quality by evaluating swing/take decisions through count leverage, pitch location, personalized hot/cold zones, and intelligent 2-strike protection using MLB Statcast data.
 
 **Formula:**  
-ACI = Good Decisions ÷ Total Pitches Seen
+ACI = Good Decisions / Total Pitches Seen
 
-Each pitch is scored binary (1 = good decision, 0 = poor decision) based on game context.
+Each pitch is scored binary (1 = good decision, 0 = poor decision) based on count context.
 
-Examples of positively scored decisions include:
-- Swinging at damage pitches in advantage counts (2-0, 3-1)
+Examples of "Good Decisions" include:
+- Swinging at damage pitches in advantage counts (e.g. 2-0, 2-1, 3-1)
 - Taking edge/shadow pitches when ahead
 - Attacking hitter-specific hot zones
 - Punishing elevated hanging breaking balls
 - Protecting competitive pitches with 2 strikes
 - Taking obvious chase pitches with 2 strikes
 
-**Context matters:**  
+**Example Context:**  
 A take on the edge at 2-0 may be scored positively, while that same take at 2-2 may be scored negatively due to count leverage and protection expectations.
 """)
 
