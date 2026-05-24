@@ -50,7 +50,7 @@ df = df.rename(columns={
 st.title("Approach per Count Index (ACI)")
 
 st.markdown("""
-ACI measures how often MLB hitters make the correct swing/take decision based on:
+ACI measures how often MLB hitters make a favorable swing/take decision based on:
 
 - Count context
 - Pitch location
