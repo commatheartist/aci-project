@@ -73,7 +73,7 @@ st.caption(
     "Developed by Brandon Smith"
 )
 
-st.markdown(
+st.caption(
     "[Baseball Analytics Portfolio] https://medium.com/@WinsAboveSmitty"
 )
 
