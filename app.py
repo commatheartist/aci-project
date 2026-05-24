@@ -69,6 +69,14 @@ Examples of positively scored decisions include:
 A take on the edge at 2-0 may be scored positively, while that same take at 2-2 may be scored negatively due to count leverage and protection expectations.
 """)
 
+st.caption(
+    "Developed by Brandon Smith"
+)
+
+st.markdown(
+    "[Baseball Analytics Portfolio] https://medium.com/@WinsAboveSmitty"
+)
+
 # -------------------
 # SECTION BREAK
 # -------------------
