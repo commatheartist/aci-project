@@ -63,13 +63,13 @@ df["Percentile"] = (
 df = df[
     [
         "Rank",
-        "Percentile",
         "player_name",
         "batting_team",
         "ACI",
         "ACI_20",
         "ACI_40",
         "ACI_80",
+        "Percentile",
         "Pitches"
     ]
 ]
@@ -82,9 +82,9 @@ df = df.rename(columns={
     "player_name": "Player",
     "batting_team": "Team",
     "ACI": "Season ACI",
-    "ACI_20": "Last 20 PA ACI",
-    "ACI_40": "Last 40 PA ACI",
-    "ACI_80": "Last 80 PA ACI",
+    "ACI_20": "20 PA",
+    "ACI_40": "40 PA",
+    "ACI_80": "80 PA",
     "Pitches": "Pitches Seen",
     "Percentile": "ACI Percentile"
 })
@@ -128,27 +128,48 @@ A take on the edge at 2-0 may be scored positively, while that same take at 2-2 
 
 st.divider()
 
+# -------------------
+# LEADERBOARD HEADER
+# -------------------
+
 st.subheader("2026 MLB Leaderboard")
 
+st.caption(
+    "Leaderboard sorted by Season ACI."
+)
+
+st.caption(
+    "Trend colors compare recent ACI windows against Season ACI: "
+    "Green = improving approach, "
+    "Yellow = stable approach, "
+    "Red = declining approach."
+)
+
 # -------------------
-# TEAM FILTER
+# FILTERS
 # -------------------
+
+col1, col2 = st.columns([1, 2])
 
 teams = ["All Teams"] + sorted(df["Team"].dropna().unique())
 
-selected_team = st.selectbox(
-    "Filter by Team",
-    teams
-)
+with col1:
+    selected_team = st.selectbox(
+        "Filter by Team",
+        teams
+    )
+
+with col2:
+    player_search = st.text_input(
+        "Search Player"
+    )
+
+# -------------------
+# APPLY FILTERS
+# -------------------
 
 if selected_team != "All Teams":
     df = df[df["Team"] == selected_team]
-
-# -------------------
-# SEARCH
-# -------------------
-
-player_search = st.text_input("Search Player")
 
 if player_search:
     df = df[
@@ -195,42 +216,39 @@ def color_trend(val, season):
 # STYLE TABLE
 # -------------------
 
-# -------------------
-# STYLE TABLE
-# -------------------
-
 styled_df = (
     df.style
       .format({
           "Season ACI": "{:.3f}",
-          "Last 20 PA ACI": "{:.3f}",
-          "Last 40 PA ACI": "{:.3f}",
-          "Last 80 PA ACI": "{:.3f}"
+          "20 PA": "{:.3f}",
+          "40 PA": "{:.3f}",
+          "80 PA": "{:.3f}"
       })
       .apply(
           lambda row: [
               "",  # Rank
-              "",  # Percentile
               "",  # Player
               "",  # Team
               "",  # Season ACI
               color_trend(
-                  row["Last 20 PA ACI"],
+                  row["20 PA"],
                   row["Season ACI"]
               ),
               color_trend(
-                  row["Last 40 PA ACI"],
+                  row["40 PA"],
                   row["Season ACI"]
               ),
               color_trend(
-                  row["Last 80 PA ACI"],
+                  row["80 PA"],
                   row["Season ACI"]
               ),
+              "",  # Percentile
               ""   # Pitches Seen
           ],
           axis=1
       )
 )
+
 # -------------------
 # DISPLAY TABLE
 # -------------------
