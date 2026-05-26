@@ -264,11 +264,7 @@ styled_df = (
 # DISPLAY TABLE
 # -------------------
 
-# -------------------
-# DISPLAY TABLE
-# -------------------
-
-st.dataframe(
+st.data_editor(
     styled_df,
     hide_index=True,
     use_container_width=True,
