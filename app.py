@@ -20,9 +20,17 @@ df = pd.read_csv("aci.csv")
 # FORMAT DATA
 # -------------------
 
-df["ACI"] = df["ACI"].round(3)
+# round ACI values
+aci_cols = [
+    "ACI",
+    "ACI_20",
+    "ACI_40",
+    "ACI_80"
+]
 
-# sort leaderboard first
+df[aci_cols] = df[aci_cols].round(3)
+
+# sort leaderboard
 df = df.sort_values(
     "ACI",
     ascending=False
@@ -36,7 +44,7 @@ total_players = len(df)
 
 df["Percentile"] = (
     (
-        (total_players - df["Rank"])
+        (total_players - df["Rank"] + 1)
         / total_players
     ) * 100
 ).round(0).astype(int).astype(str) + "th"
@@ -65,7 +73,7 @@ df = df.rename(columns={
     "ACI_40": "Last 40 PA ACI",
     "ACI_80": "Last 80 PA ACI",
     "Pitches": "Pitches Seen",
-    "Percentile": "ACI Rank Percentile"
+    "Percentile": "ACI Percentile"
 })
 
 # -------------------
@@ -82,12 +90,12 @@ st.markdown("""
 **What is ACI:**  
 ACI measures hitter approach quality by evaluating swing/take decisions through count leverage, pitch location, personalized hot/cold zones, and intelligent 2-strike protection using MLB Statcast data.
 
-ACI is process-focused rather than outcome-based, measuring hitter approach quality independent of results.
+ACI is process-focused rather than outcome-focused, measuring hitter approach quality independent of results.
 
 **Formula:**  
 ACI = Good Decisions / Total Pitches Seen
 - Each pitch is scored binary (1 = good decision, 0 = poor decision) based on count context.
-- Only hitters in the top 25% of "pitches seen" volume are included.
+- Only hitters in the top 25% of MLB pitch volume are included.
 
 **Examples of "Good Decisions" include:**
 - Swinging at damage pitches in advantage counts (e.g. 2-0, 2-1, 3-1)
@@ -139,11 +147,62 @@ if player_search:
     ]
 
 # -------------------
+# TREND COLORING
+# -------------------
+
+def color_trend(val, season):
+
+    if pd.isna(val):
+        return ""
+
+    delta = val - season
+
+    # strong improvement
+    if delta >= 0.015:
+        return "background-color: #d4edda"
+
+    # strong decline
+    elif delta <= -0.015:
+        return "background-color: #f8d7da"
+
+    # relatively stable
+    else:
+        return "background-color: #fff3cd"
+
+# -------------------
+# STYLED TABLE
+# -------------------
+
+styled_df = df.style.apply(
+    lambda row: [
+        "",  # Rank
+        "",  # Percentile
+        "",  # Player
+        "",  # Team
+        "",  # Season ACI
+        color_trend(
+            row["Last 20 PA ACI"],
+            row["Season ACI"]
+        ),
+        color_trend(
+            row["Last 40 PA ACI"],
+            row["Season ACI"]
+        ),
+        color_trend(
+            row["Last 80 PA ACI"],
+            row["Season ACI"]
+        ),
+        ""   # Pitches Seen
+    ],
+    axis=1
+)
+
+# -------------------
 # DISPLAY TABLE
 # -------------------
 
 st.dataframe(
-    df,
+    styled_df,
     hide_index=True,
     use_container_width=True
 )
