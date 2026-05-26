@@ -82,9 +82,9 @@ df = df.rename(columns={
     "player_name": "Player",
     "batting_team": "Team",
     "ACI": "Season ACI",
-    "ACI_20": "20 PA",
-    "ACI_40": "40 PA",
-    "ACI_80": "80 PA",
+    "ACI_20": "Last 20 PA",
+    "ACI_40": "Last 40 PA",
+    "ACI_80": "Last 80 PA",
     "Pitches": "Pitches Seen",
     "Percentile": "ACI Percentile"
 })
