@@ -135,14 +135,14 @@ st.divider()
 st.subheader("2026 MLB Leaderboard")
 
 st.caption(
-    "Leaderboard sorted by Season ACI."
+    "Leaderboard default sorted by Season ACI."
 )
 
 st.caption(
-    "Trend colors compare recent ACI windows against Season ACI: "
-    "Green = improving approach, "
-    "Yellow = stable approach, "
-    "Red = declining approach."
+    "Trend colors compare recent ACI windows against Season ACI (+/- .015): "
+    "Green = improving approach | "
+    "Yellow = stable approach | "
+    "Red = declining approach"
 )
 
 # -------------------
