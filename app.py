@@ -40,14 +40,14 @@ df = df.sort_values(
 df["Rank"] = df.index + 1
 
 # create percentile column
+
 total_players = len(df)
 
 df["Percentile"] = (
     (
-        (total_players - df["Rank"] + 1)
-        / total_players
+        1 - ((df["Rank"] - 1) / total_players)
     ) * 100
-).round(0).astype(int).astype(str) + "th"
+).astype(int).astype(str) + "th"
 
 # reorder columns
 df = df[
