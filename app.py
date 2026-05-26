@@ -220,9 +220,9 @@ styled_df = (
     df.style
       .format({
           "Season ACI": "{:.3f}",
-          "20 PA": "{:.3f}",
-          "40 PA": "{:.3f}",
-          "80 PA": "{:.3f}"
+          "Last 20 PA": "{:.3f}",
+          "Last 40 PA": "{:.3f}",
+          "Last 80 PA": "{:.3f}"
       })
       .set_properties(**{
           "text-align": "center"
@@ -242,15 +242,15 @@ styled_df = (
               "",  # Team
               "",  # Season ACI
               color_trend(
-                  row["20 PA"],
+                  row["Last 20 PA"],
                   row["Season ACI"]
               ),
               color_trend(
-                  row["40 PA"],
+                  row["Last 40 PA"],
                   row["Season ACI"]
               ),
               color_trend(
-                  row["80 PA"],
+                  row["Last 80 PA"],
                   row["Season ACI"]
               ),
               "",  # Percentile
