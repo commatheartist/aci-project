@@ -17,10 +17,9 @@ st.set_page_config(
 df = pd.read_csv("aci.csv")
 
 # -------------------
-# FORMAT DATA
+# ROUND ACI VALUES
 # -------------------
 
-# round ACI values
 aci_cols = [
     "ACI",
     "ACI_20",
@@ -30,16 +29,24 @@ aci_cols = [
 
 df[aci_cols] = df[aci_cols].round(3)
 
-# sort leaderboard
+# -------------------
+# SORT LEADERBOARD
+# -------------------
+
 df = df.sort_values(
     "ACI",
     ascending=False
 ).reset_index(drop=True)
 
-# create rank column
+# -------------------
+# RANK
+# -------------------
+
 df["Rank"] = df.index + 1
 
-# create percentile column
+# -------------------
+# PERCENTILE
+# -------------------
 
 total_players = len(df)
 
@@ -49,7 +56,10 @@ df["Percentile"] = (
     ) * 100
 ).astype(int).astype(str) + "th"
 
-# reorder columns
+# -------------------
+# COLUMN ORDER
+# -------------------
+
 df = df[
     [
         "Rank",
@@ -64,7 +74,10 @@ df = df[
     ]
 ]
 
-# rename columns
+# -------------------
+# RENAME COLUMNS
+# -------------------
+
 df = df.rename(columns={
     "player_name": "Player",
     "batting_team": "Team",
@@ -157,21 +170,21 @@ def color_trend(val, season):
 
     delta = val - season
 
-    # strong improvement
+    # improving
     if delta >= 0.015:
         return (
             "background-color: #d4edda; "
             "color: black;"
         )
 
-    # strong decline
+    # declining
     elif delta <= -0.015:
         return (
             "background-color: #f8d7da; "
             "color: black;"
         )
 
-    # relatively stable
+    # stable
     else:
         return (
             "background-color: #fff3cd; "
@@ -179,7 +192,7 @@ def color_trend(val, season):
         )
 
 # -------------------
-# STYLED TABLE
+# STYLE TABLE
 # -------------------
 
 styled_df = df.style.apply(
