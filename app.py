@@ -110,17 +110,13 @@ st.markdown("""
 Approach per Count Index (ACI) is a contextual hitting approach model built using MLB Statcast pitch-level data.
 
 Rather than measuring offensive production, ACI attempts to measure:
-
 > how consistently a hitter executes favorable swing/take decisions based on count leverage and pitch context.
-
-ACI is intentionally process-focused rather than results-focused.
 
 ---
 
 ### Binary Pitch Scoring
 
 Each pitch receives:
-
 - `1` = favorable decision
 - `0` = unfavorable decision
 
@@ -138,48 +134,24 @@ Only hitters in the top 25% of MLB pitch volume are included.
 
 ---
 
-### Count-Based Decision Framework
+### Count Framework
 
-#### Hunting Counts
-(0-0, 1-0, 2-0, 2-1, 3-1)
-
-Expected behavior:
-- attack damage pitches
-- swing at hitter-specific hot zones
-- punish elevated hanging breaking balls
-- avoid passive misses on hittable pitches
-- avoid expanding at chase pitches
-
-#### Pivot Counts
-(0-1, 1-1)
-
-Expected behavior:
-- maintain selective aggression
-- attack mistake pitches
-- avoid unnecessary chase expansion
-
-#### Survival Counts
-(All 2-strike counts)
-
-Expected behavior:
-- protect competitive pitches
-- defend edge/shadow locations
-- avoid obvious chase swings outside protection range
+| Count Type | Philosophy |
+|---|---|
+| Hunting Counts (0-0, 1-0, 2-0, 2-1, 3-1) | Attack damage pitches and hitter-specific hot zones while avoiding chase expansion |
+| Pivot Counts (0-1, 1-1) | Maintain selective aggression and attack mistake pitches |
+| 2-Strike Counts | Protect competitive pitches while avoiding obvious chase swings |
 
 ---
 
-### Example Positive Decisions
+### Example Decisions
 
-Examples include:
-- swinging at middle-middle fastballs in leverage counts
-- attacking personalized hot zones
+Positive decisions may include:
+- attacking middle-middle fastballs in leverage counts
+- punishing hanging breaking balls
 - taking edge pitches at 2-0 rather than expanding
 - protecting competitive pitches with 2 strikes
 - taking obvious chase pitches with 2 strikes
-
----
-
-### Example Context Shift
 
 A take on the edge at 2-0 may grade positively due to leverage and selectivity expectations, while that same take at 2-2 may grade negatively due to 2-strike protection expectations.
 
