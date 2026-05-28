@@ -89,9 +89,9 @@ df = df.rename(columns={
     "Percentile": "ACI Percentile"
 })
 
-# -------------------
-# TITLE + METHODOLOGY
-# -------------------
+# ==================================================
+# HEADER
+# ==================================================
 
 st.title("Approach per Count Index (ACI)")
 
@@ -99,17 +99,24 @@ st.caption(
     "Developed by Brandon Smith | https://medium.com/@WinsAboveSmitty"
 )
 
-st.markdown("""
-**What is ACI:**  
-ACI measures hitter approach quality by evaluating contextual swing/take decisions using MLB Statcast pitch-level data.
+# ==================================================
+# MODEL OVERVIEW
+# ==================================================
 
-Unlike traditional offensive metrics, ACI is process-focused rather than outcome-focused, attempting to measure how consistently a hitter executes favorable offensive decisions based on count leverage and pitch context.
+st.markdown("""
+### What is ACI?
+
+Approach per Count Index (ACI) is a process-based hitting model that evaluates contextual swing/take decisions using MLB Statcast pitch-level data.
+
+Rather than measuring outcomes, ACI attempts to measure:
+> how consistently a hitter executes favorable offensive decisions based on count leverage and pitch context.
 
 ---
 
 ### Binary Pitch Scoring
 
 Each pitch receives:
+
 - `1` = favorable decision
 - `0` = unfavorable decision
 
