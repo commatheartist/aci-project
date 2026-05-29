@@ -195,7 +195,7 @@ st.divider()
 st.subheader("2026 MLB Leaderboard")
 
 st.caption(
-    "Last Updated: 5/27/26"
+    "Last Updated: 5/29/26"
 )
 
 # ==================================================
