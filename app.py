@@ -22,6 +22,9 @@ df = pd.read_csv("aci.csv")
 
 aci_cols = [
     "ACI",
+    "ACI_HUNT",
+    "ACI_2K",
+    "ACI_RISP",
     "ACI_20",
     "ACI_40",
     "ACI_80"
@@ -66,6 +69,9 @@ df = df[
         "player_name",
         "batting_team",
         "ACI",
+        "ACI_HUNT",
+        "ACI_2K",
+        "ACI_RISP",
         "ACI_20",
         "ACI_40",
         "ACI_80",
@@ -82,9 +88,12 @@ df = df.rename(columns={
     "player_name": "Player",
     "batting_team": "Team",
     "ACI": "Season ACI",
-    "ACI_20": "20 PA",
-    "ACI_40": "40 PA",
-    "ACI_80": "80 PA",
+    "ACI_HUNT": "Hitter's Count ACI",
+    "ACI_2K": "2-Strike ACI",
+    "ACI_RISP": "RISP ACI",
+    "ACI_20": "Last 20 PA",
+    "ACI_40": "Last 40 PA",
+    "ACI_80": "Last 80 PA",
     "Percentile": "ACI Percentile",
     "Pitches": "Pitches Seen"
 })
@@ -107,10 +116,9 @@ st.caption(
 st.markdown("""
 ### What is ACI?
 
-Approach per Count Index (ACI) is a contextual hitting approach model built using MLB Statcast pitch-level data.
+Approach per Count Index (ACI) is a contextual decision-quality model built using MLB Statcast pitch-level data.
 
-Rather than measuring offensive production, ACI attempts to measure:
-> how consistently a hitter executes favorable swing/take decisions based on count leverage and pitch context.
+Rather than measuring offensive production, ACI attempts to measure how consistently a hitter executes favorable swing/take decisions based on count leverage, pitch context, damage opportunity, and chase discipline.
 
 ---
 
@@ -161,6 +169,9 @@ A take on the edge at 2-0 may grade positively due to leverage and selectivity e
 
 The leaderboard includes:
 - Season ACI
+- Hitter's Count ACI
+- 2-Strike ACI
+- RISP ACI
 - Last 20 PA ACI
 - Last 40 PA ACI
 - Last 80 PA ACI
@@ -191,36 +202,47 @@ st.caption(
 # KPI CARDS
 # ==================================================
 
+# ==================================================
+# KPI CARDS
+# ==================================================
+
 league_aci = df["Season ACI"].mean()
-league_20 = df["20 PA"].mean()
+league_hunt = df["Hitter's Count ACI"].mean()
+league_2k = df["2-Strike ACI"].mean()
 qualified_hitters = len(df)
 
-kpi1, kpi2, kpi3 = st.columns(3)
+kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 
 with kpi1:
     st.metric(
-        "MLB Avg Season ACI",
+        "MLB Avg ACI",
         f"{league_aci:.3f}"
     )
 
 with kpi2:
     st.metric(
-        "MLB Avg 20 PA ACI",
-        f"{league_20:.3f}"
+        "MLB Avg Hitter's Count ACI",
+        f"{league_hunt:.3f}"
     )
 
 with kpi3:
+    st.metric(
+        "MLB Avg 2-Strike ACI",
+        f"{league_2k:.3f}"
+    )
+
+with kpi4:
     st.metric(
         "Qualified Hitters",
         qualified_hitters
     )
 
 st.caption(
-    "Leaderboard sorted by Season ACI."
+    "Season ACI measures overall decision quality."
 )
 
 st.caption(
-    "Trend colors compare rolling windows against Season ACI."
+    "Situational ACIs evaluate approach quality in hitter's counts, 2-strike counts, and runners-in-scoring-position situations."
 )
 
 # ==================================================
@@ -299,32 +321,38 @@ def color_trend(val, season):
 styled_df = (
     df.style
       .format({
-          "Season ACI": "{:.3f}",
-          "20 PA": "{:.3f}",
-          "40 PA": "{:.3f}",
-          "80 PA": "{:.3f}"
-      })
+    "Season ACI": "{:.3f}",
+    "Hitter's Count ACI": "{:.3f}",
+    "2-Strike ACI": "{:.3f}",
+    "RISP ACI": "{:.3f}",
+    "Last 20 PA": "{:.3f}",
+    "Last 40 PA": "{:.3f}",
+    "Last 80 PA": "{:.3f}"
+})
       .apply(
           lambda row: [
-              "",  # Rank
-              "",  # Player
-              "",  # Team
-              "",  # Season ACI
-              color_trend(
-                  row["20 PA"],
-                  row["Season ACI"]
-              ),
-              color_trend(
-                  row["40 PA"],
-                  row["Season ACI"]
-              ),
-              color_trend(
-                  row["80 PA"],
-                  row["Season ACI"]
-              ),
-              "",  # Percentile
-              ""   # Pitches Seen
-          ],
+    "",  # Rank
+    "",  # Player
+    "",  # Team
+    "",  # Season ACI
+    "",  # Hitter's Count ACI
+    "",  # 2-Strike ACI
+    "",  # RISP ACI
+    color_trend(
+        row["Last 20 PA"],
+        row["Season ACI"]
+    ),
+    color_trend(
+        row["Last 40 PA"],
+        row["Season ACI"]
+    ),
+    color_trend(
+        row["Last 80 PA"],
+        row["Season ACI"]
+    ),
+    "",  # Percentile
+    ""   # Pitches Seen
+],
           axis=1
       )
 )
