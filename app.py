@@ -249,7 +249,8 @@ st.caption(
 )
 
 st.caption(
-    "Situational ACIs evaluate approach quality in hitter's counts, 2-strike counts, and runners-in-scoring-position situations."
+    "Situational ACIs evaluate approach quality in hitter's counts, "
+    "2-strike counts, and runners-in-scoring-position situations."
 )
 
 st.caption(
